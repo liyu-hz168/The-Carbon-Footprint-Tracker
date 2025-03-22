@@ -50,7 +50,7 @@ const Goal = () => {
     }, [data, goal]);
 
     return (
-        <div className="relative bg-white shadow-lg p-6 rounded-lg border border-gray-300 col-span-4 w-auto h-auto border-4 border-lime-100">
+        <div className="relative bg-white shadow-lg p-6 rounded-lg col-span-4 w-auto h-auto border-6 border-lime-100">
             <div className="grid grid-cols-2 gap-3">
                 {/* Grid 1 */}
                 <div>
@@ -92,9 +92,9 @@ const Goal = () => {
                     </div>
                     <div className="center justify-center">
                         {
-                            progress >= 60 && progress < 80  
+                            progress >= 60 && progress < 75  
                             ? (<img src={good} className="w-52 h-52"/>)
-                            : progress >= 80 && progress < 95  
+                            : progress >= 75 && progress < 95  
                             ? (<img src={uhh} className="w-52 h-52"/>)
                             :progress >= 95
                             ? (<img src={bad} className="w-52 h-52"/>)

@@ -11,7 +11,7 @@ type ProgressBarProps = {
 const ProgressBar = ({ progress }:ProgressBarProps) => {
     const getColor = () => {
         if (progress >= 95) return "red";
-        if (progress >= 80) return "orange";
+        if (progress >= 75) return "orange";
         if (progress >= 60) return "yellow";
         return "green";
       };

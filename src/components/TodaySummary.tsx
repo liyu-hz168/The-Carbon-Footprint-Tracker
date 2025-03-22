@@ -80,7 +80,7 @@ const TodaySummary = () => {
     return (
         <div className="flex col-span-3">
             {/* List of activities from today */}
-            <div className="relative bg-white shadow-lg p-6 rounded-lg border border-gray-300 w-screen h-auto border-6 border-lime-300">
+            <div className="relative bg-white shadow-lg p-6 rounded-lg w-screen h-auto border-6 border-lime-300">
                 <label className="mt font-bold">Your activities today:</label>
                 <div className="text-right">
                     <LogActivityButton isPageOpen={isPageOpen} setIsPageOpen={setIsPageOpen} />
