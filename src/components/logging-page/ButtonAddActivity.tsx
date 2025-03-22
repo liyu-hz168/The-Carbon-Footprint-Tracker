@@ -27,7 +27,7 @@ const AddActivityButton = ({
     const { data, setNewData } = useDataContext();
     const { todayData, setNewTodayData } = useTodayContext();
 
-    //TODO: Takes care of add activity
+    //Takes care of add activity
     const addActivity = () => {
         //Check that all required input are inputed
         //Check that info field should be a numeric input
@@ -68,12 +68,14 @@ const AddActivityButton = ({
     };
 
     return(
-        <button 
-            className=" px-3 py-1 bg-lime-500 text-white rounded-full hover:bg-lime-600"
-            onClick={() => addActivity()}
-        >
-            Add Activity
-        </button>
+        <>
+            <button 
+                className=" px-3 py-1 bg-lime-500 text-white rounded-full hover:bg-lime-600"
+                onClick={() => addActivity()}
+            >
+                Add Activity
+            </button>
+        </>
     ); 
 }
 
