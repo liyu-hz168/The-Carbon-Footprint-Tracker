@@ -2,6 +2,8 @@ import { Header } from "./Header";
 import { Link } from "react-router-dom";
 import sadsprout from "../assets/sadsrpout.png";
 
+// In case user try to access invalid link. App will reroute to this page 
+
 const PageNotFound = () => {
     return (
         <>

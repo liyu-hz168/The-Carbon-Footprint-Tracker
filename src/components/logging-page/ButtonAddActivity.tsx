@@ -13,6 +13,11 @@ type AddActivityButtonProp = {
     setInput: (arg:string) => void
 };
 
+// Button component that allows the user to add their inputed information as a new activity 
+// Button will give warning if field not filled out correctly 
+// Button will trigger carbon footprint calculation based on user input 
+// If the inputed acitivty is from current day, it will be displayed on the TodaySummary list 
+
 const AddActivityButton = ({ 
     selectedOption, 
     setSelectedOption, 

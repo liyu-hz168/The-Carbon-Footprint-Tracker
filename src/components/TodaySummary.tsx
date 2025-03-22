@@ -12,42 +12,13 @@ const TodaySummary = () => {
     const { todayData, setNewTodayData } = useTodayContext();
     const { data, setNewData } = useDataContext();
 
-    //Mock data to put back into today array once data clears at the end of the day
-    const generateMockDataToday = () => [
-        { 
-            activity_name: "Dairy (Milk)", 
-            activity_type: "food & diet", 
-            carbon_footprint: 3.6, 
-            date: getTodayDate() 
-        },
-        { 
-            activity_name: "Ferry", 
-            activity_type: "transportation", 
-            carbon_footprint: 12.0, 
-            date: getTodayDate()
-        },
-        { 
-            activity_name: "Egg Consumption", 
-            activity_type: "food & diet", 
-            carbon_footprint: 4.8, 
-            date: getTodayDate()
-        },
-        { 
-            activity_name: "Express Air Shipping", 
-            activity_type: "transportation", 
-            carbon_footprint: 25.0, 
-            date: getTodayDate()
-        },
-    ];
-
     // Clear out component once date changes 
     useEffect(() => {
         const interval = setInterval(() => {
           const today = getTodayDate();
           if (today !== currentDate) {
             setCurrentDate(today);
-            //This is the mock data that will always remain, date is always set to today 
-            setNewTodayData([...generateMockDataToday()]);
+            setNewTodayData([]);
             
           }
         }, 1000); // Check every second
@@ -82,6 +53,7 @@ const TodaySummary = () => {
             {/* List of activities from today */}
             <div className="relative bg-white shadow-lg p-6 rounded-lg w-screen h-auto border-6 border-lime-300">
                 <label className="mt font-bold">Your activities today:</label>
+                {/* Opens a pop up modual to allow activity tracking */}
                 <div className="text-right">
                     <LogActivityButton isPageOpen={isPageOpen} setIsPageOpen={setIsPageOpen} />
                 </div>
@@ -91,7 +63,7 @@ const TodaySummary = () => {
                             return (
                                 <li key={`${activity.activity_name}-${activity.date}-${index}`}>
                                     <span className="hover:bg-gray-200">* {activity.activity_name}, {activity.carbon_footprint} kg CO₂e</span>
-                                    {/* Delete Button - Hidden until hover */}
+                                    {/* Delete Button */}
                                     <button 
                                         className="ml-2 px-2 py-1 text-xs bg-gray-200 hover:bg-gray-400 text-white rounded"
                                         onClick={() => handleDelete(index)}

@@ -13,6 +13,8 @@ type ActivityTypeProp = {
     setSelectedOption: (arg: string) => void,
 };
 
+// Drop down select component for user to record the type of activity they wish to log
+
 const ActivityTypeDropDown = ({ selectedOption, setSelectedOption }:ActivityTypeProp) => {
 
     return (

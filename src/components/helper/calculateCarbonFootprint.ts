@@ -1,6 +1,7 @@
 import emissionFactors from "../graphs/emissio-data";
 import { truncateTo3DecimalPlaces } from "./truncate";
 
+// Used to calculate carbon footprint based on user input 
 function calculateCarbonFootPrint(activityType: string, activityName: string, info: number){
     
     if(activityType === "other"){

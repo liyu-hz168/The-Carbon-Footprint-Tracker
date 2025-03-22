@@ -1,13 +1,11 @@
 import { truncateTo3DecimalPlaces } from "../helper/truncate";
-// import awesome from "../../assets/awesome.png";
-// import good from "../../assets/good.png";
-// import uhh from "../../assets/uhh.png";
-// import bad from "../../assets/bad.png";
 
 type ProgressBarProps = {
     progress: number
 };
-  
+
+// Progress bar will change color based on user performance 
+
 const ProgressBar = ({ progress }:ProgressBarProps) => {
     const getColor = () => {
         if (progress >= 95) return "red";

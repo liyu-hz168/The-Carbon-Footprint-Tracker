@@ -10,6 +10,10 @@ import point_down from "../assets/point-down.gif";
 import tree from "../assets/tree.png";
 import { useNavigate } from "react-router-dom";
 
+// Dashboard is the main page that the user loads into and perform most of their action
+// Logging activity, calculating users carbon footprint
+// Data visualization based on saved user input 
+
 function Dashboard() {
 
   // used to reset local memory, keep for debugging 
@@ -61,7 +65,7 @@ function Dashboard() {
                       <div className=" flex items-center gap-2 row-span-1">
                         <img src={point_down} className="scale-75"></img>
                       </div>
-                       {/* Resource button */}
+                       {/* Resource button routes to resources page */}
                       <div className=" flex flex-col items-start row-span-2">
                         <label className="text-lg font-semibold"> More Resources! </label>
                         <button 

@@ -5,6 +5,8 @@ import { useState } from "react";
 import { AddActivityButton } from "./ButtonAddActivity";
 
 //This component opens up when log activity button is clicked 
+//This is a pop up modual 
+
 type LogActivityPageProp = {
     isOpen: boolean,
     onClose: () => void

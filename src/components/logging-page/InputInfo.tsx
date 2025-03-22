@@ -5,6 +5,9 @@ type InputInfoProp = {
     setInput: (arg: string) => void
 };
 
+// Field takes the required numeric value as user input
+// This input is required for carbon footprint calculation 
+
 const InputInfo = ({ activityType, selectedOption, input, setInput }: InputInfoProp) => {
 
     const getUnitPrompt = (activityType: string, selectedOption?: string): string => {

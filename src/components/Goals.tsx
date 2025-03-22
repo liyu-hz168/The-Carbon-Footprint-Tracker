@@ -54,6 +54,7 @@ const Goal = () => {
             <div className="grid grid-cols-2 gap-3">
                 {/* Grid 1 */}
                 <div>
+                    {/* Info display, current monthly goal*/}
                     <div className='mb-2'><b>Your monthly goal:</b> {goal} kg CO₂e</div>
                     <div className='mb-2'>
                         <b>Carbon footprint this month:</b> {
@@ -61,7 +62,9 @@ const Goal = () => {
                                         .reduce((acc, activity) => acc + activity.carbon_footprint, 0))
                                         } kg CO₂e
                     </div>
+                    {/* Progress bar used to track goal */}
                     <div className='mb-2'><ProgressBar progress={progress}/></div>
+                    {/* Set a new carbon footprint goal */}
                     <div className='mb-2'>
                         <b>Set a new monthly goal:</b>
                         <input 
@@ -81,6 +84,7 @@ const Goal = () => {
                 </div>
                 {/* Grid 2 */}
                 <div className="center justify-center">
+                     {/* Comments will change based on user's progress towards goal */}
                     <div className="mt-2 mb-2">
                         {
                             progress >= 80 && progress < 95
@@ -90,6 +94,7 @@ const Goal = () => {
                             : "Awesome! You are under your monthly goal!"
                         }
                     </div>
+                    {/* Mr Incredible's face will change based on user's progress towards goal */}
                     <div className="center justify-center">
                         {
                             progress >= 60 && progress < 75  

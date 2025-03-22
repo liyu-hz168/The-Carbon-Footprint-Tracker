@@ -5,7 +5,8 @@ type LogActivityButtonProps = {
     isPageOpen: boolean;
     setIsPageOpen: (open: boolean) => void;
 };
-
+// Button on the TodaySummary component that opens the pop up modual 
+// Pop up modual allows user to input info and log activity
 const LogActivityButton = ({ isPageOpen, setIsPageOpen }:LogActivityButtonProps) => {
 
     return (
