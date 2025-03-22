@@ -50,7 +50,7 @@ const Goal = () => {
     }, [data, goal]);
 
     return (
-        <div className="relative bg-white shadow-lg p-6 rounded-lg col-span-4 w-auto h-auto border-6 border-lime-100">
+        <div className="relative bg-white shadow-lg p-6 rounded-lg col-span-4 w-auto h-auto border-6 border-lime-300">
             <div className="grid grid-cols-2 gap-3">
                 {/* Grid 1 */}
                 <div>
