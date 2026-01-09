@@ -64,10 +64,10 @@ const YearBarGraph = () => {
         const curYear = new Date().getFullYear();
         const monthlyData = Array(12).fill(0);
 
-        data.filter(activity => Number(activity.date.split("/")[2]) === curYear)
+        data.filter(activity => new Date(activity.activity_date).getFullYear() === curYear)
             .forEach(activity => {
-                const monthIndex = Number(activity.date.split("/")[0]) - 1; 
-                monthlyData[monthIndex] += activity.carbon_footprint;
+                const monthIndex = new Date(activity.activity_date).getMonth(); 
+                monthlyData[monthIndex] += Number(activity.carbon_footprint);
             });
         //set bar graph with new data
         setBarGraphData({

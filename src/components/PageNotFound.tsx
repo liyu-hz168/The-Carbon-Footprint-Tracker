@@ -10,7 +10,7 @@ const PageNotFound = () => {
             <div className="relative w-screen h-screen">
                 <Header/>
                 <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] mt-8">
-                    <h1 className="text-6xl font-extrabold text-gray-400 drop-shadow-lg ">
+                    <h1 className="text-6xl font-extrabold text-gray-400 drop-shadow-lg">
                         404 Page not found ...
                     </h1>
                     <img src={sadsprout} className="w-52 h-52"></img>

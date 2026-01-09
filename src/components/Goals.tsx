@@ -24,12 +24,13 @@ const Goal = () => {
     const { data } = useDataContext();
     const monthlyEmission = data.filter(
         data => {
-            const now = new Date();
-            return(Number(data.date.split("/")[0]) === now.getMonth() + 1 
-                && Number(data.date.split("/")[2]) === now.getFullYear()
+            const dateObj = new Date(data.activity_date);
+
+            return(dateObj.getMonth()=== new Date().getMonth()
+                && dateObj.getFullYear() === new Date().getFullYear()
             );
         }
-    ).reduce((acc, emission) => emission.carbon_footprint + acc, 0);
+    ).reduce((acc, emission) => Number(emission.carbon_footprint) + acc, 0);
 
     const curProgress = (monthlyEmission/goal) * 100;
 
@@ -42,11 +43,31 @@ const Goal = () => {
         }
     };
 
+    // useEffect(() => {
+    //     const totalEmissions = data.filter(activity => Number(activity.date.split("/")[0]) === new Date().getMonth() + 1)
+    //                             .reduce((acc, activity) => acc + activity.carbon_footprint, 0);
+    //     const newProgress = (totalEmissions / goal) * 100; // Convert to percentage
+    //     updateProgress(Math.min(newProgress, 100)); // Cap at 100%
+    // }, [data, goal]);
+
     useEffect(() => {
-        const totalEmissions = data.filter(activity => Number(activity.date.split("/")[0]) === new Date().getMonth() + 1)
-                                .reduce((acc, activity) => acc + activity.carbon_footprint, 0);
-        const newProgress = (totalEmissions / goal) * 100; // Convert to percentage
-        updateProgress(Math.min(newProgress, 100)); // Cap at 100%
+        const now = new Date();
+
+        const totalEmissions = data
+            .filter(activity => {
+            if (!activity.activity_date) return false;
+
+            const d = new Date(activity.activity_date);
+
+            return (
+                d.getMonth() === now.getMonth() &&
+                d.getFullYear() === now.getFullYear()
+            );
+            })
+            .reduce((acc, activity) => acc + Number(activity.carbon_footprint), 0);
+
+        const newProgress = (totalEmissions / goal) * 100;
+        updateProgress(Math.min(newProgress, 100));
     }, [data, goal]);
 
     return (
@@ -58,9 +79,22 @@ const Goal = () => {
                     <div className='mb-2'><b>Your monthly goal:</b> {goal} kg CO₂e</div>
                     <div className='mb-2'>
                         <b>Carbon footprint this month:</b> {
-                                    truncateTo3DecimalPlaces(data.filter(activity => Number(activity.date.split("/")[0]) === new Date().getMonth() + 1)
-                                        .reduce((acc, activity) => acc + activity.carbon_footprint, 0))
-                                        } kg CO₂e
+                                    truncateTo3DecimalPlaces(
+                                        data
+                                            .filter(activity => {
+                                                if (!activity.activity_date) return false;
+
+                                                const d = new Date(activity.activity_date);
+                                                const now = new Date();
+
+                                                return (
+                                                d.getMonth() === now.getMonth() &&
+                                                d.getFullYear() === now.getFullYear()
+                                                );
+                                            })
+                                            .reduce((acc, activity) => acc + Number(activity.carbon_footprint), 0)
+                                    )} kg CO₂e
+
                     </div>
                     {/* Progress bar used to track goal */}
                     <div className='mb-2'><ProgressBar progress={progress}/></div>

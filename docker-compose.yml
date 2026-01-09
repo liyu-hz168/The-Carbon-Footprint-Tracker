@@ -1,0 +1,32 @@
+services:
+  db:
+    build: ./backend/database
+    environment:
+      POSTGRES_DB: carbon-footprint-data
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  emission-service: 
+    build: ./backend/emission-service
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/carbon-footprint-data
+    depends_on:
+      - db
+    ports:
+      - "5003:5003"
+
+  # users-service:
+  #   build: ./services/users-service
+  #   environment:
+  #     DATABASE_URL: postgres://postgres:postgres@db:5432/carbon-footprint-data
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - "5001:5001"
+
+volumes:
+  pgdata:

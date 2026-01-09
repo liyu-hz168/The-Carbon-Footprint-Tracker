@@ -53,39 +53,57 @@ const SevenDayGraph = () => {
 
     // When date changes this graph needs to update
     // When global data changes this graph also need to update
+    // const getPastSevenDays = (): string[] => {
+    //     const dates: string[] = [];
+    //     const today = new Date();
+    
+    //     for (let i = 0; i < 7; i++) {
+    //         const pastDate = new Date();
+    //         pastDate.setDate(today.getDate() - i);
+    
+    //         const formattedDate = `${pastDate.getMonth() + 1}/${pastDate.getDate()}/${pastDate.getFullYear()}`;
+    //         dates.push(formattedDate);
+    //     }
+    
+    //     return dates;
+    // };
+
     const getPastSevenDays = (): string[] => {
         const dates: string[] = [];
         const today = new Date();
-    
-        for (let i = 0; i < 7; i++) {
+
+        for (let i = 6; i >= 0; i--) { // 6 days ago → today
             const pastDate = new Date();
             pastDate.setDate(today.getDate() - i);
-    
             const formattedDate = `${pastDate.getMonth() + 1}/${pastDate.getDate()}/${pastDate.getFullYear()}`;
             dates.push(formattedDate);
         }
-    
+
         return dates;
     };
 
+
     useEffect(()=> {
         const sevenDayArr = getPastSevenDays();
+        console.log(`seven day array ${sevenDayArr}`);
+
         const sevenDayData = Array(7).fill(0);
 
-        const mapping = {
-            [sevenDayArr[6]]: 6,
-            [sevenDayArr[5]]: 5,
-            [sevenDayArr[4]]: 4,
-            [sevenDayArr[3]]: 3,
-            [sevenDayArr[2]]: 2,
-            [sevenDayArr[1]]: 1,
-            [sevenDayArr[0]]: 0
+        const mapping: Record<string, number> = {};
+        sevenDayArr.forEach((date, idx) => mapping[date] = idx);
+
+        const formatDateToMMDDYYYY = (dateInput: string | Date) => {
+            const date = new Date(dateInput);
+            const month = date.getMonth() + 1; // 0-based month
+            const day = date.getDate() + 1; // FIXME: figure out date bug 
+            const year = date.getFullYear();
+            return `${month}/${day}/${year}`;
         };
 
-        data.filter(activity => sevenDayArr.includes(activity.date))
+        data.filter(activity => sevenDayArr.includes(formatDateToMMDDYYYY(activity.activity_date)))
             .forEach(activity => { 
-                console.log(activity.date);
-                sevenDayData[mapping[activity.date]] += activity.carbon_footprint;
+                console.log(`seven day line chart ${activity.activity_date}, after formatting ${formatDateToMMDDYYYY(activity.activity_date)}`);
+                sevenDayData[mapping[formatDateToMMDDYYYY(activity.activity_date)]] += Number(activity.carbon_footprint);
             });
         //set line graph with new data
         setLineGraphData({

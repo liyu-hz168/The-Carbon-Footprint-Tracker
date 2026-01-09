@@ -3,12 +3,18 @@ import { Stats } from "./Stats.tsx";
 import { TodaySummary } from "./TodaySummary.tsx";
 import { Goal } from "./Goals.tsx";
 import { useState, useEffect } from "react";
-import { DataContext, TodayContext, DateContext} from "./context.ts";
-import { mockData, mockDataToday } from "./graphs/mockData.ts";
+import { DataContext, TodayContext, DateContext, Activity} from "./context.ts";
+//import { mockData, mockDataToday } from "./graphs/mockData.ts";
 import { getTodayDate } from "./helper/date.ts";
 import point_down from "../assets/point-down.gif";
 import tree from "../assets/tree.png";
 import { useNavigate } from "react-router-dom";
+
+//TODO: 
+// Implement websocket for real time update to be pushed from server
+// handles live update for same user log in on different devices
+
+
 
 // Dashboard is the main page that the user loads into and perform most of their action
 // Logging activity, calculating users carbon footprint
@@ -20,28 +26,73 @@ function Dashboard() {
   // localStorage.setItem("data", JSON.stringify(mockData));
   // localStorage.setItem("todayData", JSON.stringify(mockDataToday));
 
-  const [data, setNewData] = useState(() => {
-    return JSON.parse(localStorage.getItem("data") ||  JSON.stringify(mockData));
-  });
+  // const [data, setNewData] = useState(() => {
+  //   return JSON.parse(localStorage.getItem("data") ||  JSON.stringify(mockData));
+  // });
   
-  const [todayData, setNewTodayData] = useState(() => {
-    const temp = JSON.parse(localStorage.getItem("todayData") || JSON.stringify(mockDataToday));
-    console.log("temp",temp)
-    return temp
-  });
+  // const [todayData, setNewTodayData] = useState(() => {
+  //   const temp = JSON.parse(localStorage.getItem("todayData") || JSON.stringify(mockDataToday));
+  //   console.log("temp",temp)
+  //   return temp
+  // });
 
-  useEffect(() => {
-    localStorage.setItem("data", JSON.stringify(data))
-  }, [data]);
-
-  useEffect(() => {
-    localStorage.setItem('todayData', JSON.stringify(todayData));
-  }, [todayData]);
-
+  const [data, setNewData] = useState<Activity[]>([]);
+  const [todayData, setNewTodayData] = useState<Activity[]>([]);
   const [currentDate, setCurrentDate] = useState(getTodayDate());
 
   // Helper to navigate to resources page when button clicked
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   localStorage.setItem("data", JSON.stringify(data))
+  // }, [data]);
+
+  // useEffect(() => {
+  //   localStorage.setItem('todayData', JSON.stringify(todayData));
+  // }, [todayData]);
+
+  // fetch initial data from database 
+  useEffect(() => {
+    const fetchAnnualData = async () => {
+      try {
+        const year = new Date().getFullYear();
+        const userId = 1; // FIXME
+
+        const response = await fetch(`http://localhost:5003/emission/annual_data?userId=${userId}&year=${year}`);
+
+        if (!response.ok) throw new Error("Failed to fetch user's annual data");
+
+        const annualDataJSON = await response.json();
+        console.log(annualDataJSON);
+        setNewData(annualDataJSON);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchAnnualData();
+  }, []);
+
+  useEffect(() => {
+    const fetchTodayData = async () => {
+      try {
+        const today = getTodayDate();
+        const userId = 1; // FIXME
+
+        const response = await fetch(`http://localhost:5003/emission/today_data?userId=${userId}&date=${today}`);
+
+        if (!response.ok) throw new Error("Failed to fetch today's data");
+
+        const todayDataJSON = await response.json();
+        console.log(todayDataJSON);
+        setNewTodayData(todayDataJSON);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchTodayData();
+  }, [currentDate]);
 
   const goToResourcesPage = () => {
     navigate("/resources"); // Navigate to /resources page

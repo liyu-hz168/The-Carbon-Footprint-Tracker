@@ -1,5 +1,11 @@
 import { createContext, useContext } from "react";
-import { Activity } from "./graphs/mockData";
+// import { Activity } from "./graphs/mockData";
+export type Activity = {
+    activity_name: string,
+    activity_type: string,
+    carbon_footprint: number,
+    activity_date: string;   // YYYY-MM-DD
+};
 
 type DataContextType = {
     data: Activity[],

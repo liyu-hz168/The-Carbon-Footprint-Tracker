@@ -38,7 +38,7 @@ const TodaySummary = () => {
             activity.activity_name === info.activity_name &&
             activity.activity_type === info.activity_type &&
             activity.carbon_footprint === info.carbon_footprint &&
-            activity.date === info.date
+            activity.activity_date === info.activity_date
         );
 
         if (indexToRemove !== -1) {
@@ -46,6 +46,8 @@ const TodaySummary = () => {
             newGlobalArr.splice(indexToRemoveGlobal, 1)
             setNewData([...newGlobalArr]); 
         }
+
+        // TODO: delete from db 
     };
 
     return (
@@ -61,7 +63,7 @@ const TodaySummary = () => {
                     <ul>
                         {todayData.map((activity, index) => {
                             return (
-                                <li key={`${activity.activity_name}-${activity.date}-${index}`}>
+                                <li key={`${activity.activity_name}-${activity.activity_date}-${index}`}>
                                     <span className="hover:bg-gray-200">* {activity.activity_name}, {activity.carbon_footprint} kg CO₂e</span>
                                     {/* Delete Button */}
                                     <button 
@@ -78,7 +80,7 @@ const TodaySummary = () => {
                 {/* Total carbon footprint today */}
                 <div className="mb-3">
                     <label className="font-bold">Total carbon footprint:</label>
-                    <span className="bg-yellow-200 px-1">{truncateTo3DecimalPlaces(todayData.reduce((acc, activity)=> acc + activity.carbon_footprint, 0))} kg CO₂e</span>
+                    <span className="bg-yellow-200 px-1">{truncateTo3DecimalPlaces(todayData.reduce((acc, activity)=> acc + Number(activity.carbon_footprint), 0))} kg CO₂e</span>
                 </div>
             </div>
         </div>
