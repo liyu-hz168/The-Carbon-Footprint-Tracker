@@ -1,5 +1,7 @@
 # The-Carbon-Footprint-Tracker
 
+This is a toy application built to practice using React 
+
 **To run this application, run npm install, then run npm run dev**
 
 Features Implemented: 
@@ -22,14 +24,9 @@ Features Implemented:
     - The goal will be tracked via a progress bar 
     - When user under 60% of their goal the bar will be green, under 75% the bar is yellow, under 95% the bar is orange. Once progress exceeds 95% the bar will turn red. Mr Incredibles face will also change as progress increases
 
-4. Local Storage
+4. Data Storage
 
-    - Mock data and all user inputed data is stored in local storage
-    - User setted goal is also stored in local storage
-    - When application gets relaunched or reloaded memory should persist 
+    - User inputed data is stored in Postgres 
 
-5. Resource library 
 
-    - Clicking on the tree button on the bottom right of the application will route the user to a new page with information to learn more about climate change and carbon footprint
-    - Mostly implemented this to learn about react routing
 
